@@ -31,7 +31,7 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Start containers
-      run: docker-compose -f "tests/FC.Codeflix.Catalog.EndToEndTests/docker-compose.yml" up -d --build 
+      run: docker compose -f "tests/FC.Codeflix.Catalog.EndToEndTests/docker-compose.yml" up -d --build 
 
     - name: Sleep for 30 seconds to wait SQL base to be ready
       uses: jakejarvis/wait-action@master
