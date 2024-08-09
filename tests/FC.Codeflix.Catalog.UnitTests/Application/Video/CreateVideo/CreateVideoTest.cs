@@ -1,11 +1,9 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;
-using FC.Codeflix.Catalog.Application.UseCases.Video.Common;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.Domain.Exceptions;
 using FluentAssertions;
-using System.Text;
 using Xunit;
 using Moq;
 using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;

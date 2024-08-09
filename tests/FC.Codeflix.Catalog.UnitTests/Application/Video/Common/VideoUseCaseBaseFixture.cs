@@ -73,6 +73,9 @@ public class VideoUseCaseBaseFixture : BaseFixture
     public FileInput GetValidImageFileInput()
        => new("jpeg", new MemoryStream(Encoding.ASCII.GetBytes("test")));
 
+    public FileInput GetValidMediaFileInput()
+       => new("mp4", new MemoryStream(Encoding.ASCII.GetBytes("test")));
+
     public Mock<IVideoRepository> GetRepository()
         => new();
 
