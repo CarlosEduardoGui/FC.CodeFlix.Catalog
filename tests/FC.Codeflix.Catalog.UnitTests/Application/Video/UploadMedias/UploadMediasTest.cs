@@ -1,10 +1,10 @@
-﻿using FC.Codeflix.Catalog.UnitTests.Application.Video.UploadMedia;
-using FC.Codeflix.Catalog.Application.Common;
-using Xunit;
-using Moq;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.UploadMedias;
+﻿using FC.Codeflix.Catalog.Application.Common;
 using FC.Codeflix.Catalog.Application.Exceptions;
+using FC.Codeflix.Catalog.UnitTests.Application.Video.UploadMedia;
 using FluentAssertions;
+using Moq;
+using Xunit;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.UploadMedias;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Video.UploadMedias;
 

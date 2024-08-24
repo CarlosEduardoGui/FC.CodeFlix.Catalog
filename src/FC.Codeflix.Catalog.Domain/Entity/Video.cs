@@ -24,7 +24,7 @@ public class Video : AggregateRoot
     public List<Guid> _categories;
     public IReadOnlyList<Guid> Categories => _categories.AsReadOnly();
     public List<Guid> _genres;
-    public IReadOnlyList<Guid> Genres => 
+    public IReadOnlyList<Guid> Genres =>
         _genres.AsReadOnly();
     public List<Guid> _castMembers;
     public IReadOnlyList<Guid> CastMembers =>

@@ -3,10 +3,10 @@ public class NotificationValidationHandler : ValidationHandler
 {
     private readonly List<ValidationError> _errors;
 
-    public IReadOnlyCollection<ValidationError> Errors 
+    public IReadOnlyCollection<ValidationError> Errors
         => _errors.AsReadOnly();
 
-    public NotificationValidationHandler() 
+    public NotificationValidationHandler()
         => _errors = new();
 
     public override void HandleError(ValidationError error)

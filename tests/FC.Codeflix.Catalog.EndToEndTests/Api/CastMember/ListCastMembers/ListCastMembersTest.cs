@@ -3,9 +3,7 @@ using FC.Codeflix.Catalog.Application.UseCases.CastMember.ListCastMembers;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.Codeflix.Catalog.EndToEndTests.Api.CastMember.Common;
 using FC.Codeflix.Catalog.EndToEndTests.ApiModels;
-using FC.Codeflix.Catalog.EndToEndTests.Extensions.Date;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using Xunit;
 

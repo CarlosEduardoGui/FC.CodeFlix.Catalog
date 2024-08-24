@@ -25,7 +25,7 @@ public class DeleteVideo : IDeleteVideo
 
         await _videoRepository.DeleteAsync(video, cancellationToken);
 
-        if(video.Trailer is not null)
+        if (video.Trailer is not null)
             await _storageService.DeleteAsync(video.Trailer.FilePath, cancellationToken);
 
         if (video.Media is not null)

@@ -1,11 +1,11 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;
-using FC.Codeflix.Catalog.Application.Exceptions;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Application.Interfaces;
-using FC.Codeflix.Catalog.Domain.Repository;
+using FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;
 using FC.Codeflix.Catalog.Domain.Exceptions;
+using FC.Codeflix.Catalog.Domain.Repository;
 using FluentAssertions;
-using Xunit;
 using Moq;
+using Xunit;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;
 
@@ -401,8 +401,8 @@ public class CreateVideoTest
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
-    [Fact(DisplayName = nameof(ThrowsExceptionInUploadErrorCase))]
-    public async Task ThrowsExceptionInUploadErrorCase()
+    [Fact(DisplayName = nameof(ThrowsExceptionInImageUploadedErrorCase))]
+    public async Task ThrowsExceptionInImageUploadedErrorCase()
     {
         var repositoryMock = _fixture.GetRepository();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
@@ -444,8 +444,51 @@ public class CreateVideoTest
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
-    [Fact(DisplayName = nameof(ThrowsExceptionAndRollbackUploadInErrorCase))]
-    public async Task ThrowsExceptionAndRollbackUploadInErrorCase()
+    [Fact(DisplayName = nameof(ThrowsExceptionInMediaUploadedErrorCase))]
+    public async Task ThrowsExceptionInMediaUploadedErrorCase()
+    {
+        var repositoryMock = _fixture.GetRepository();
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
+        var storageServicekMock = _fixture.GetStorageService();
+        var validFileInput = _fixture.GetValidMediaFileInput();
+        var expectedBannerName = $"banner.{validFileInput.Extension}";
+        storageServicekMock.Setup(x => x.UploadAsync(
+                It.IsAny<string>(),
+                It.IsAny<Stream>(),
+                It.IsAny<CancellationToken>()
+            )
+        ).ThrowsAsync(new Exception("something went wrong."));
+        var useCase = new UseCase.CreateVideo(
+            repositoryMock.Object,
+            Mock.Of<ICategoryRepository>(),
+            Mock.Of<IGenreRepository>(),
+            Mock.Of<ICastMemberRepository>(),
+            storageServicekMock.Object,
+            unitOfWorkMock.Object
+        );
+        var input = _fixture.GetValidVideoInputWithAllImages();
+
+        var action = async () => await useCase.Handle(input, CancellationToken.None);
+
+        await action
+            .Should()
+            .ThrowExactlyAsync<Exception>()
+            .WithMessage("something went wrong.");
+        storageServicekMock.VerifyAll();
+        unitOfWorkMock.Verify(x => x.CommitAsync(
+                It.IsAny<CancellationToken>()
+            ), Times.Never
+        );
+        repositoryMock.Verify(x => x.InsertAsync(
+                It.IsAny<DomainEntity.Video>(),
+                It.IsAny<CancellationToken>()
+            ), Times.Never
+        );
+    }
+
+    [Trait("Use Cases", "CreateVideo - Use Cases")]
+    [Fact(DisplayName = nameof(ThrowsExceptionAndRollbackUploadInImageErrorCase))]
+    public async Task ThrowsExceptionAndRollbackUploadInImageErrorCase()
     {
         var repositoryMock = _fixture.GetRepository();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
@@ -500,6 +543,64 @@ public class CreateVideoTest
                 It.IsAny<DomainEntity.Video>(),
                 It.IsAny<CancellationToken>()
             ), Times.Never
+        );
+    }
+
+    [Trait("Use Cases", "CreateVideo - Use Cases")]
+    [Fact(DisplayName = nameof(ThrowsExceptionAndRollbackUploadInMediaErrorCase))]
+    public async Task ThrowsExceptionAndRollbackUploadInMediaErrorCase()
+    {
+        var repositoryMock = _fixture.GetRepository();
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
+        var storageServicekMock = _fixture.GetStorageService();
+        var input = _fixture.GetValidVideoInputWithAllMedias();
+        var storageMediaPath = _fixture.GetValidMediaPath();
+        var storageTrailerPath = _fixture.GetValidMediaPath();
+        var storagePathList = new List<string>() { storageMediaPath, storageTrailerPath };
+        storageServicekMock.Setup(x => x.UploadAsync(
+                It.Is<string>(x => x.Contains($"media.{input.Media!.Extension}")),
+                It.IsAny<Stream>(),
+                It.IsAny<CancellationToken>()
+            )
+        ).ReturnsAsync(storageMediaPath);
+        storageServicekMock.Setup(x => x.UploadAsync(
+                It.Is<string>(x => x.Contains($"trailer.{input.Trailer!.Extension}")),
+                It.IsAny<Stream>(),
+                It.IsAny<CancellationToken>()
+            )
+        ).ReturnsAsync(storageTrailerPath);
+        unitOfWorkMock.Setup(x => x.CommitAsync(
+                It.IsAny<CancellationToken>()
+            )
+        ).ThrowsAsync(new Exception("Something went wrong with the commmit."));
+        var useCase = new UseCase.CreateVideo(
+            repositoryMock.Object,
+            Mock.Of<ICategoryRepository>(),
+            Mock.Of<IGenreRepository>(),
+            Mock.Of<ICastMemberRepository>(),
+            storageServicekMock.Object,
+            unitOfWorkMock.Object
+        );
+
+        var action = async () => await useCase.Handle(input, CancellationToken.None);
+
+        await action
+            .Should()
+            .ThrowExactlyAsync<Exception>()
+            .WithMessage("Something went wrong with the commmit.");
+        storageServicekMock.Verify(x => x.DeleteAsync(
+                It.Is<string>(x => storagePathList.Contains(x)),
+                It.IsAny<CancellationToken>()
+            ), Times.Exactly(2)
+        );
+        storageServicekMock.Verify(x => x.DeleteAsync(
+                It.Is<string>(x => storagePathList.Contains(x)),
+                It.IsAny<CancellationToken>()
+            ), Times.Exactly(2)
+        );
+        unitOfWorkMock.Verify(x => x.CommitAsync(
+                It.IsAny<CancellationToken>()
+            ), Times.Once
         );
     }
 

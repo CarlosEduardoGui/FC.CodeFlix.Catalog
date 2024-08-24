@@ -1,11 +1,11 @@
-﻿using FC.Codeflix.Catalog.Domain.Validation;
-using FC.Codeflix.Catalog.Domain.Exceptions;
-using FC.Codeflix.Catalog.Domain.Repository;
+﻿using FC.Codeflix.Catalog.Application.Common;
 using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Application.Interfaces;
 using FC.Codeflix.Catalog.Application.UseCases.Video.Common;
+using FC.Codeflix.Catalog.Domain.Exceptions;
+using FC.Codeflix.Catalog.Domain.Repository;
+using FC.Codeflix.Catalog.Domain.Validation;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
-using FC.Codeflix.Catalog.Application.Common;
 
 namespace FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;
 
@@ -85,6 +85,12 @@ public class CreateVideo : ICreateVideo
 
         if (video.Banner is not null)
             await _storageService.DeleteAsync(video.Banner.Path, cancellationToken);
+
+        if (video.Media is not null)
+            await _storageService.DeleteAsync(video.Media.FilePath, cancellationToken);
+
+        if (video.Trailer is not null)
+            await _storageService.DeleteAsync(video.Trailer.FilePath, cancellationToken);
     }
 
     private async Task UploadImagesMedia(CreateVideoInput request, DomainEntity.Video video, CancellationToken cancellationToken)

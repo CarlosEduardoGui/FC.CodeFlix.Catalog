@@ -1,6 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.Validation;
-using System.Security.Cryptography;
 
 namespace FC.Codeflix.Catalog.Domain.Validator;
 public class VideoValidator : Validator
@@ -29,7 +28,7 @@ public class VideoValidator : Validator
 
     private void ValidateDescription()
     {
-        if(string.IsNullOrEmpty(_video.Description))
+        if (string.IsNullOrEmpty(_video.Description))
             _handler.HandleError(string.Format(ConstantsMessages.FIELD_NOT_EMPTY, nameof(_video.Description)));
 
         if (_video.Description.Length > DESCRIPTION_MAX_LENGHT)

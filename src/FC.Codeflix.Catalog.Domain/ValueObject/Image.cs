@@ -9,7 +9,7 @@ public class Image : SeedWork.ValueObject
         Path = path;
     }
 
-    public override bool Equals(SeedWork.ValueObject? other) 
+    public override bool Equals(SeedWork.ValueObject? other)
         => other is Image image &&
             Path == image.Path;
 

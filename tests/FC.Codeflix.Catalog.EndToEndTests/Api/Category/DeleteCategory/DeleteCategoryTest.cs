@@ -11,7 +11,7 @@ public class DeleteCategoryTest : IDisposable
 {
     private readonly CategoryBaseFixture _fixture;
 
-    public DeleteCategoryTest(CategoryBaseFixture fixture) 
+    public DeleteCategoryTest(CategoryBaseFixture fixture)
         => _fixture = fixture;
 
     [Trait("EndToEnd/Api", "Category/Delete - Endpoints")]

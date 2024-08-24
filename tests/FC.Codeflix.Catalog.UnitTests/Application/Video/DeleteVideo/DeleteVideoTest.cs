@@ -1,9 +1,9 @@
-﻿using Moq;
-using Xunit;
-using VideoEntity = FC.Codeflix.Catalog.Domain.Entity.Video;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.DeleteVideo;
-using FC.Codeflix.Catalog.Application.Exceptions;
+﻿using FC.Codeflix.Catalog.Application.Exceptions;
 using FluentAssertions;
+using Moq;
+using Xunit;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.DeleteVideo;
+using VideoEntity = FC.Codeflix.Catalog.Domain.Entity.Video;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Video.DeleteVideo;
 

@@ -11,7 +11,7 @@ public class MediaTest : BaseFixture
 {
     private readonly VideoTestFixture _fixture;
 
-    public MediaTest(VideoTestFixture videoTestFixture) 
+    public MediaTest(VideoTestFixture videoTestFixture)
         => _fixture = videoTestFixture;
 
     [Trait("Domain", "Media - Entity")]

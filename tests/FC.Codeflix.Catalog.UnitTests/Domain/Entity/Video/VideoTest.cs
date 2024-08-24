@@ -296,7 +296,7 @@ public class VideoTest
         var video = _fixture.GetValidVideo();
         var validEncodedPath = _fixture.GetValidMediaPath();
 
-        var action = () =>video.UpdateAsEncoded(validEncodedPath);
+        var action = () => video.UpdateAsEncoded(validEncodedPath);
 
         action
             .Should()
