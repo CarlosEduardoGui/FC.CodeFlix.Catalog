@@ -17,7 +17,9 @@ public record VideoModelOutput(
     IReadOnlyCollection<Guid>? CastMembersIds = null,
     string? Thumb = null,
     string? Banner = null,
-    string? ThumbHalf = null
+    string? ThumbHalf = null,
+    string? Media = null,
+    string? Trailer = null
 )
 {
     public static VideoModelOutput FromVideo(DomainEntity.Video video)
@@ -36,6 +38,8 @@ public record VideoModelOutput(
             video.CastMembers,
             video.Thumb?.Path,
             video.Banner?.Path,
-            video.ThumbHalf?.Path
+            video.ThumbHalf?.Path,
+            video.Media?.FilePath,
+            video.Trailer?.FilePath
         );
 }

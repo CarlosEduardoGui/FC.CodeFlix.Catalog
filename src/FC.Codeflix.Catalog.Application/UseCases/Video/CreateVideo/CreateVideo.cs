@@ -5,6 +5,7 @@ using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Application.Interfaces;
 using FC.Codeflix.Catalog.Application.UseCases.Video.Common;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Application.Common;
 
 namespace FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;
 
@@ -58,6 +59,8 @@ public class CreateVideo : ICreateVideo
         {
             await UploadImagesMedia(request, video, cancellationToken);
 
+            await UploadVideosMedia(request, video, cancellationToken);
+
             await _repository.InsertAsync(video, cancellationToken);
 
             await _uow.CommitAsync(cancellationToken);
@@ -88,7 +91,7 @@ public class CreateVideo : ICreateVideo
     {
         if (request.Thumb is not null)
         {
-            var fileName = $"{video.Id}-thumb.{request.Thumb.Extension}";
+            var fileName = StorageFileName.Create(video.Id, nameof(video.Thumb), request.Thumb.Extension);
 
             var urlThumb = await _storageService.UploadAsync(fileName, request.Thumb.FileStream, cancellationToken);
 
@@ -97,7 +100,7 @@ public class CreateVideo : ICreateVideo
 
         if (request.Banner is not null)
         {
-            var fileName = $"{video.Id}-banner.{request.Banner.Extension}";
+            var fileName = StorageFileName.Create(video.Id, nameof(video.Banner), request.Banner.Extension);
 
             var urlBanner = await _storageService.UploadAsync(fileName, request.Banner.FileStream, cancellationToken);
 
@@ -106,7 +109,7 @@ public class CreateVideo : ICreateVideo
 
         if (request.ThumbHalf is not null)
         {
-            var fileName = $"{video.Id}-thumbhalf.{request.ThumbHalf.Extension}";
+            var fileName = StorageFileName.Create(video.Id, nameof(video.ThumbHalf), request.ThumbHalf.Extension);
 
             var urlBanner = await _storageService.UploadAsync(fileName, request.ThumbHalf.FileStream, cancellationToken);
 
@@ -182,6 +185,27 @@ public class CreateVideo : ICreateVideo
             var stringNotFoundIds = string.Join(',', notFoundIds);
 
             throw new RelatedAggregateException($"Related category Id (or Ids) not found: {stringNotFoundIds}.");
+        }
+    }
+
+    private async Task UploadVideosMedia(CreateVideoInput request, DomainEntity.Video video, CancellationToken cancellationToken)
+    {
+        if (request.Media is not null)
+        {
+            var fileName = StorageFileName.Create(video.Id, nameof(video.Media), request.Media.Extension);
+
+            var urlMedia = await _storageService.UploadAsync(fileName, request.Media.FileStream, cancellationToken);
+
+            video.UpdateMedia(urlMedia);
+        }
+
+        if (request.Trailer is not null)
+        {
+            var fileName = StorageFileName.Create(video.Id, nameof(video.Trailer), request.Trailer.Extension);
+
+            var urlMedia = await _storageService.UploadAsync(fileName, request.Trailer.FileStream, cancellationToken);
+
+            video.UpdateTrailer(urlMedia);
         }
     }
 }
