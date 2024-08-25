@@ -23,6 +23,43 @@ public class VideoUseCaseBaseFixture : BaseFixture
             GetRandomRating()
         );
 
+    public DomainEntity.Video GetValidVideoAllProperties()
+    {
+        var video = new DomainEntity.Video(
+                GetValidTitle(),
+                GetValidDescription(),
+                GetValidYearLauched(),
+                GetRandomBoolean(),
+                GetRandomBoolean(),
+                GetValidDuration(),
+                GetRandomRating()
+            );
+
+        video.UpdateBanner(GetValidImagePath());
+        video.UpdateThumb(GetValidImagePath());
+        video.UpdateThumbHalf(GetValidImagePath());
+        video.UpdateMedia(GetValidMediaPath());
+        video.UpdateTrailer(GetValidMediaPath());
+
+        var random = new Random();
+        Enumerable
+            .Range(1, random.Next(2, 5))
+            .ToList()
+            .ForEach(_ => video.AddCastMember(Guid.NewGuid()));
+
+        Enumerable
+            .Range(1, random.Next(2, 5))
+            .ToList()
+            .ForEach(_ => video.AddCategory(Guid.NewGuid()));
+
+        Enumerable
+            .Range(1, random.Next(2, 5))
+            .ToList()
+            .ForEach(_ => video.AddGenre(Guid.NewGuid()));
+
+        return video;
+    }
+
     public Rating GetRandomRating()
     {
         var values = Enum.GetValues<Rating>();
