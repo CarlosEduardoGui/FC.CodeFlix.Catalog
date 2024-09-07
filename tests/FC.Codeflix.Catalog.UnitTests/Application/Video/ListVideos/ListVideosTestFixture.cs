@@ -9,9 +9,9 @@ public class ListVideosTestFixtureCollection : ICollectionFixture<ListVideosTest
 
 public class ListVideosTestFixture : VideoUseCaseBaseFixture
 {
-    public List<DomainEntity.Video> VideosList(int? quantity = 10) 
+    public List<DomainEntity.Video> VideosList() 
         => Enumerable
-            .Range(1, Random.Shared.Next(2, quantity ?? 10))
+            .Range(1, Random.Shared.Next(2, 10))
             .Select(_ => GetValidVideoAllProperties())
             .ToList();
 }

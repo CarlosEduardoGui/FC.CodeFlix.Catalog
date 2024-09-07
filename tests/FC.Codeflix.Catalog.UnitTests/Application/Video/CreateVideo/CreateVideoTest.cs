@@ -2,6 +2,7 @@
 using FC.Codeflix.Catalog.Application.Interfaces;
 using FC.Codeflix.Catalog.Application.UseCases.Video.CreateVideo;
 using FC.Codeflix.Catalog.Domain.Exceptions;
+using FC.Codeflix.Catalog.Domain.Extension;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FluentAssertions;
 using Moq;
@@ -56,7 +57,7 @@ public class CreateVideoTest
         output.Title.Should().Be(input.Title);
         output.Description.Should().Be(input.Description);
         output.Duration.Should().Be(input.Duration);
-        output.Rating.Should().Be(input.Rating);
+        output.Rating.Should().Be(input.Rating.ToStringRating());
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);
@@ -109,11 +110,11 @@ public class CreateVideoTest
         output.Title.Should().Be(input.Title);
         output.Description.Should().Be(input.Description);
         output.Duration.Should().Be(input.Duration);
-        output.Rating.Should().Be(input.Rating);
+        output.Rating.Should().Be(input.Rating.ToStringRating());
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);
-        output.Thumb.Should().Be(expectedThumbName);
+        output.ThumbFileUrl.Should().Be(expectedThumbName);
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
@@ -163,11 +164,11 @@ public class CreateVideoTest
         output.Title.Should().Be(input.Title);
         output.Description.Should().Be(input.Description);
         output.Duration.Should().Be(input.Duration);
-        output.Rating.Should().Be(input.Rating);
+        output.Rating.Should().Be(input.Rating.ToStringRating());
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);
-        output.Banner.Should().Be(expectedThumbName);
+        output.BannerFileUrl.Should().Be(expectedThumbName);
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
@@ -217,11 +218,11 @@ public class CreateVideoTest
         output.Title.Should().Be(input.Title);
         output.Description.Should().Be(input.Description);
         output.Duration.Should().Be(input.Duration);
-        output.Rating.Should().Be(input.Rating);
+        output.Rating.Should().Be(input.Rating  .ToStringRating());
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);
-        output.ThumbHalf.Should().Be(expectedThumbName);
+        output.ThumbHalfFileUrl.Should().Be(expectedThumbName);
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
@@ -285,13 +286,13 @@ public class CreateVideoTest
         output.Title.Should().Be(input.Title);
         output.Description.Should().Be(input.Description);
         output.Duration.Should().Be(input.Duration);
-        output.Rating.Should().Be(input.Rating);
+        output.Rating.Should().Be(input.Rating.ToStringRating());
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);
-        output.Banner.Should().Be(expectedBannerName);
-        output.Thumb.Should().Be(expectedThumbName);
-        output.ThumbHalf.Should().Be(expectedThumbHalfName);
+        output.BannerFileUrl.Should().Be(expectedBannerName);
+        output.ThumbFileUrl.Should().Be(expectedThumbName);
+        output.ThumbHalfFileUrl.Should().Be(expectedThumbHalfName);
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
@@ -340,11 +341,11 @@ public class CreateVideoTest
         output.Title.Should().Be(input.Title);
         output.Description.Should().Be(input.Description);
         output.Duration.Should().Be(input.Duration);
-        output.Rating.Should().Be(input.Rating);
+        output.Rating.Should().Be(input.Rating.ToStringRating());
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);
-        output.Media.Should().Be(expectedMediaName);
+        output.VideoFileUrl.Should().Be(expectedMediaName);
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
@@ -393,11 +394,11 @@ public class CreateVideoTest
         output.Title.Should().Be(input.Title);
         output.Description.Should().Be(input.Description);
         output.Duration.Should().Be(input.Duration);
-        output.Rating.Should().Be(input.Rating);
+        output.Rating.Should().Be(input.Rating.ToStringRating());
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);
-        output.Trailer.Should().Be(expectedTrailerName);
+        output.TrailerFileUrl.Should().Be(expectedTrailerName);
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
@@ -689,11 +690,12 @@ public class CreateVideoTest
         output.Title.Should().Be(input.Title);
         output.Description.Should().Be(input.Description);
         output.Duration.Should().Be(input.Duration);
-        output.Rating.Should().Be(input.Rating);
+        output.Rating.Should().Be(input.Rating.ToStringRating());
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);
-        output.CategoriesIds.Should().BeEquivalentTo(categoriesIds);
+        var outputCategoriesItem = output.Categories!.Select(category => category.Id).ToList();
+        outputCategoriesItem.Should().BeEquivalentTo(categoriesIds);
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
@@ -784,12 +786,13 @@ public class CreateVideoTest
         output.Title.Should().Be(input.Title);
         output.Description.Should().Be(input.Description);
         output.Duration.Should().Be(input.Duration);
-        output.Rating.Should().Be(input.Rating);
+        output.Rating.Should().Be(input.Rating.ToStringRating());
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);
-        output.CategoriesIds.Should().BeNullOrEmpty();
-        output.GenresIds.Should().BeEquivalentTo(genresIds);
+        output.Categories.Should().BeNullOrEmpty();
+        var outputGenresItem = output.Genres!.Select(genre => genre.Id).ToList();
+        outputGenresItem.Should().BeEquivalentTo(genresIds);
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
@@ -874,13 +877,14 @@ public class CreateVideoTest
         output.Title.Should().Be(input.Title);
         output.Description.Should().Be(input.Description);
         output.Duration.Should().Be(input.Duration);
-        output.Rating.Should().Be(input.Rating);
+        output.Rating.Should().Be(input.Rating.ToStringRating());
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);
-        output.CategoriesIds.Should().BeNullOrEmpty();
-        output.GenresIds.Should().BeNullOrEmpty();
-        output.CastMembersIds.Should().BeEquivalentTo(castMembersIds);
+        output.Categories.Should().BeNullOrEmpty();
+        output.Genres.Should().BeNullOrEmpty();
+        var outputCastMemberItem = output.CastMembers!.Select(castMember => castMember.Id).ToList();
+        outputCastMemberItem.Should().BeEquivalentTo(castMembersIds);
     }
 
     [Trait("Use Cases", "CreateVideo - Use Cases")]
