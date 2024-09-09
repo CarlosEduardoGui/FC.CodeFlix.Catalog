@@ -124,7 +124,7 @@ public class Video : AggregateRoot
     public void RemoveGenre(Guid genreId)
         => _genres.Remove(genreId);
 
-    public void RemoveAllGenres(Guid genreIdOne)
+    public void RemoveAllGenres()
         => _genres.Clear();
 
     public void AddCastMember(Guid castMemberId)

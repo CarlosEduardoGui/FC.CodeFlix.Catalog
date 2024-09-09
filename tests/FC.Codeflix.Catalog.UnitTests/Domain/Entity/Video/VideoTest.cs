@@ -392,7 +392,7 @@ public class VideoTest
         video.AddGenre(genreIdOne);
         video.AddGenre(genreIdTwo);
 
-        video.RemoveAllGenres(genreIdOne);
+        video.RemoveAllGenres();
 
         video.Should().NotBeNull();
         video.Genres.Should().BeEmpty();

@@ -6,4 +6,6 @@ namespace FC.Codeflix.Catalog.Domain.Repository;
 public interface IGenreRepository : IGenericRepository<Genre>, ISearchableRepository<Genre>
 {
     Task<IReadOnlyList<Guid>> GetIdsListByIdsAsync(List<Guid> guids, CancellationToken cancellationToken);
+
+    Task<IReadOnlyList<Genre>> GetListByIdsAsync(List<Guid> ids, CancellationToken cancellationToken);
 }
