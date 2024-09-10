@@ -54,6 +54,12 @@ public class ListVideosTestFixture : VideoUseCaseBaseFixture
         return (videos, categories, genres);
     }
 
+    public List<DomainEntity.Video> VideosListWithoutRelations()
+        => Enumerable
+            .Range(1, Random.Shared.Next(2, 10))
+            .Select(_ => GetValidVideoWithImages())
+            .ToList();
+
     private DomainEntity.Category GetExampleCategory() =>
         new(
             GetValidCategoryName(),

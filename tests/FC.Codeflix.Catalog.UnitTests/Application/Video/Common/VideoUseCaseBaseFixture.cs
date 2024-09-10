@@ -23,6 +23,27 @@ public class VideoUseCaseBaseFixture : BaseFixture
             GetRandomRating()
         );
 
+    public DomainEntity.Video GetValidVideoWithImages()
+    {
+        var video = new DomainEntity.Video(
+                GetValidTitle(),
+                GetValidDescription(),
+                GetValidYearLauched(),
+                GetRandomBoolean(),
+                GetRandomBoolean(),
+                GetValidDuration(),
+                GetRandomRating()
+            );
+
+        video.UpdateBanner(GetValidImagePath());
+        video.UpdateThumb(GetValidImagePath());
+        video.UpdateThumbHalf(GetValidImagePath());
+        video.UpdateMedia(GetValidMediaPath());
+        video.UpdateTrailer(GetValidMediaPath());
+
+        return video;
+    }
+
     public DomainEntity.Video GetValidVideoAllProperties()
     {
         var video = new DomainEntity.Video(
