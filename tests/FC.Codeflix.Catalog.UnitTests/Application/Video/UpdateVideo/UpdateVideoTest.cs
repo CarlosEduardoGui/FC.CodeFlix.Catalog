@@ -1,9 +1,9 @@
-﻿using Moq;
-using Xunit;
+﻿using FC.Codeflix.Catalog.Domain.Extension;
 using FluentAssertions;
-using FC.Codeflix.Catalog.Domain.Extension;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.UpdateVideo;
+using Moq;
+using Xunit;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.UpdateVideo;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Video.UpdateVideo;
 

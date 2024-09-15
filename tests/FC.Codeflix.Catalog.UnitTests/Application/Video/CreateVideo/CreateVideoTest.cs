@@ -218,7 +218,7 @@ public class CreateVideoTest
         output.Title.Should().Be(input.Title);
         output.Description.Should().Be(input.Description);
         output.Duration.Should().Be(input.Duration);
-        output.Rating.Should().Be(input.Rating  .ToStringRating());
+        output.Rating.Should().Be(input.Rating.ToStringRating());
         output.Opened.Should().Be(input.Opened);
         output.Published.Should().Be(input.Published);
         output.YearLaunched.Should().Be(input.YearLaunched);

@@ -9,14 +9,14 @@ public class ListVideosTestFixtureCollection : ICollectionFixture<ListVideosTest
 
 public class ListVideosTestFixture : VideoUseCaseBaseFixture
 {
-    public List<DomainEntity.Video> VideosList() 
+    public List<DomainEntity.Video> VideosList()
         => Enumerable
             .Range(1, Random.Shared.Next(2, 10))
             .Select(_ => GetValidVideoAllProperties())
             .ToList();
 
     public (
-        List<DomainEntity.Video> Videos, 
+        List<DomainEntity.Video> Videos,
         List<DomainEntity.Category> Categories,
         List<DomainEntity.Genre> Genres
     ) VideosListWithRelations()

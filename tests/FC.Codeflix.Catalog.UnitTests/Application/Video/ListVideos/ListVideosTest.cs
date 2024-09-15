@@ -1,12 +1,11 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Video.ListVideos;
+using FC.Codeflix.Catalog.Domain.Extension;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.ListVideos;
 using Entity = FC.Codeflix.Catalog.Domain.Entity.Video;
-using FC.Codeflix.Catalog.Domain.Extension;
-using FC.Codeflix.Catalog.Domain.Repository;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.Video.ListVideos;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Video.ListVideos;
 

@@ -19,11 +19,11 @@ public class UpdateVideo : IUpdateVideo
         var video = await _videoRepository.GetByIdAsync(request.Id, cancellationToken);
 
         video.Update(
-            request.Title, 
-            request.Description, 
-            request.YearLaunched, 
-            request.Opened, 
-            request.Published, 
+            request.Title,
+            request.Description,
+            request.YearLaunched,
+            request.Opened,
+            request.Published,
             request.Duration,
             request.Rating
         );

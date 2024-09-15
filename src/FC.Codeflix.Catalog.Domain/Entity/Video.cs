@@ -73,7 +73,7 @@ public class Video : AggregateRoot
         Opened = opened;
         Published = published;
         Duration = duration;
-        if(rating is not null)
+        if (rating is not null)
             Rating = rating.Value;
     }
 

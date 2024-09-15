@@ -39,7 +39,7 @@ public class GetVideoTest
         output.Description.Should().Be(exampleVideo.Description);
         output.Duration.Should().Be(exampleVideo.Duration);
         output.Rating.Should().Be(exampleVideo.Rating.ToStringRating());
-        output.Opened.Should().Be(exampleVideo  .Opened);
+        output.Opened.Should().Be(exampleVideo.Opened);
         output.Published.Should().Be(exampleVideo.Published);
         output.YearLaunched.Should().Be(exampleVideo.YearLaunched);
         videoRepositoryMock.VerifyAll();

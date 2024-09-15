@@ -1,5 +1,4 @@
-﻿using FC.Codeflix.Catalog.Domain.Enum;
-using FC.Codeflix.Catalog.Domain.Extension;
+﻿using FC.Codeflix.Catalog.Domain.Extension;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
 namespace FC.Codeflix.Catalog.Application.UseCases.Video.Common;
