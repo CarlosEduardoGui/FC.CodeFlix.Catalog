@@ -9,7 +9,10 @@ public class UpdateVideoTestFixtureCollection : ICollectionFixture<UpdateVideoTe
 
 public class UpdateVideoTestFixture : VideoUseCaseBaseFixture
 {
-    public UpdateVideoInput CreateValidInput(Guid Id)
+    public UpdateVideoInput CreateValidInput(
+        Guid Id,
+        List<Guid>? GenreIds = null
+    )
     => new(
         Id,
         GetValidTitle(),
@@ -18,6 +21,7 @@ public class UpdateVideoTestFixture : VideoUseCaseBaseFixture
         GetValidDuration(),
         GetRandomRating(),
         GetValidYearLauched(),
-        GetRandomBoolean()
+        GetRandomBoolean(),
+        GenresIds: GenreIds
     );
 }

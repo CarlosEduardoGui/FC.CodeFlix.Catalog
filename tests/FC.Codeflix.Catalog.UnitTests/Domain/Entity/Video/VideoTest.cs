@@ -84,6 +84,38 @@ public class VideoTest
     }
 
     [Trait("Domain", "Video - Aggregate")]
+    [Fact(DisplayName = nameof(UpdateWithRating))]
+    public void UpdateWithRating()
+    {
+        var expectedTitle = _fixture.GetValidTitle();
+        var expectedDescription = _fixture.GetValidDescription();
+        var expectedYearLaunched = _fixture.GetValidYearLauched();
+        var expectedOpened = _fixture.GetRandomBoolean();
+        var expectedPublished = _fixture.GetRandomBoolean();
+        var expectedDuration = _fixture.GetValidDuration();
+        var expectedRating = _fixture.GetRandomRating();
+        var video = _fixture.GetValidVideo();
+
+        video.Update(
+            expectedTitle,
+            expectedDescription,
+            expectedYearLaunched,
+            expectedOpened,
+            expectedPublished,
+            expectedDuration,
+            expectedRating
+        );
+
+        video.Title.Should().Be(expectedTitle);
+        video.Description.Should().Be(expectedDescription);
+        video.YearLaunched.Should().Be(expectedYearLaunched);
+        video.Opened.Should().Be(expectedOpened);
+        video.Published.Should().Be(expectedPublished);
+        video.Duration.Should().Be(expectedDuration);
+        video.Rating.Should().Be(expectedRating);
+    }
+
+    [Trait("Domain", "Video - Aggregate")]
     [Fact(DisplayName = nameof(ValidateWhenValidState))]
     public void ValidateWhenValidState()
     {
